@@ -162,7 +162,7 @@ def run_image(url_face: str, url_age_gender: str, image_path: str):
 
     annotate_image(image, genders, ages, bboxes)
 
-    save_path = image_path + ".ANNOTATED.jpg"
+    save_path = "_".join([image_path, ages, gender,".ANNOTATED.jpg"])
 
     save_annotated_image(
         image, save_path, bboxes, det_scores, landmarks, embeddings, genders, ages
