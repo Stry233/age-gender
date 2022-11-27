@@ -349,3 +349,9 @@ Check out the [paper](https://arxiv.org/abs/2108.08186).
 ## Authors
 
 - [Taewoon Kim](https://taewoon.kim/)
+
+## Modification in this fork
+
+Replaced test images
+
+Replaced file naming rules
