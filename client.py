@@ -176,8 +176,7 @@ def run_image(url_face: str, url_age_gender: str, image_path: str):
 def save_final_report(image, genders, ages, save_dir="./"):
     report_dir = save_dir + "all_img_res.csv"
     if not os.path.exists(report_dir):
-        os.makedirs(report_dir)
-        with open(report_dir, 'wb') as report_file:
+        with open(report_dir, 'a') as report_file:
             filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             filewriter.writerow(['name', 'gender stat', 'age stat'])
 
