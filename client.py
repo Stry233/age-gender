@@ -2,8 +2,10 @@
 This is just a simple client example. Hack it as much as you want. 
 """
 import argparse
+import csv
 import io
 import logging
+import os
 import pickle
 
 import jsonpickle
@@ -91,7 +93,7 @@ def annotate_image(image: Image.Image, genders: list, ages: list, bboxes: list) 
         draw.text(
             (bbox[0], bbox[3]),
             "MALE " + str(round(gender["m"] * 100)) + str("%") + ", "
-            "FEMALE "
+                                                                 "FEMALE "
             + str(round(gender["f"] * 100))
             + str("%")
             + f", ENTROPY: {round(gender['entropy'], 4)}",
@@ -101,14 +103,14 @@ def annotate_image(image: Image.Image, genders: list, ages: list, bboxes: list) 
 
 
 def save_annotated_image(
-    image: Image.Image,
-    save_path: str,
-    bboxes: list,
-    det_scores: list,
-    landmarks: list,
-    embeddings: list,
-    genders: list,
-    ages: list,
+        image: Image.Image,
+        save_path: str,
+        bboxes: list,
+        det_scores: list,
+        landmarks: list,
+        embeddings: list,
+        genders: list,
+        ages: list,
 ) -> None:
     """Save the annotated image.
 
@@ -162,11 +164,26 @@ def run_image(url_face: str, url_age_gender: str, image_path: str):
 
     annotate_image(image, genders, ages, bboxes)
 
-    save_path = "_".join([image_path, str(ages), str(genders),".ANNOTATED.jpg"])
+    save_path = "_".join([image_path, ".ANNOTATED.jpg"])  # extendable for further info add
 
     save_annotated_image(
         image, save_path, bboxes, det_scores, landmarks, embeddings, genders, ages
     )
+
+    save_final_report(image, genders, ages)
+
+
+def save_final_report(image, genders, ages, save_dir="./"):
+    report_dir = os.path.dirname(save_dir + "all_img_res.csv")
+    if not os.path.exists(report_dir):
+        os.makedirs(report_dir)
+        with open(report_dir, 'wb') as report_file:
+            filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            filewriter.writerow(['name', 'gender stat', 'age stat'])
+
+    with open(report_dir, 'wb') as report_file:
+        filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        filewriter.writerow([image, genders, ages])
 
 
 def annotate_fps(image: Image.Image, fps: int) -> None:
@@ -184,7 +201,6 @@ def annotate_fps(image: Image.Image, fps: int) -> None:
 
 
 def run_webcam(url_face: str, url_age_gender: str, camera_id: int):
-
     import time
 
     import cv2
