@@ -180,7 +180,7 @@ def save_final_report(image, genders, ages, save_dir="./"):
             filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             filewriter.writerow(['name', 'gender stat', 'age stat'])
 
-    with open(report_dir, 'wb') as report_file:
+    with open(report_dir, 'a') as report_file:
         filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow([image, genders, ages])
 
