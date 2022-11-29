@@ -174,7 +174,7 @@ def run_image(url_face: str, url_age_gender: str, image_path: str):
 
 
 def save_final_report(image, genders, ages, save_dir="./"):
-    report_dir = os.path.dirname(save_dir + "all_img_res.csv")
+    report_dir = save_dir + "all_img_res.csv"
     if not os.path.exists(report_dir):
         os.makedirs(report_dir)
         with open(report_dir, 'wb') as report_file:
