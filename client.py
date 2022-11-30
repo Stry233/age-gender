@@ -170,19 +170,19 @@ def run_image(url_face: str, url_age_gender: str, image_path: str):
         image, save_path, bboxes, det_scores, landmarks, embeddings, genders, ages
     )
 
-    save_final_report(image, genders, ages)
+    save_final_report(image_path, genders, ages)
 
 
 def save_final_report(image, genders, ages, save_dir="./"):
     report_dir = save_dir + "all_img_res.csv"
     if not os.path.exists(report_dir):
         with open(report_dir, 'a') as report_file:
-            logging.info(f"report created at {save_dir}")
+            logging.info(f"report created at {report_dir}")
             filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             filewriter.writerow(['name', 'gender stat', 'age stat'])
 
     with open(report_dir, 'a') as report_file:
-        logging.info(f"report saved and appended to {save_dir}")
+        logging.info(f"report saved and appended to {report_dir}")
         filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow([image, genders, ages])
 
