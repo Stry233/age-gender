@@ -178,13 +178,13 @@ def save_final_report(image, genders, ages, save_dir="./"):
     if not os.path.exists(report_dir):
         with open(report_dir, 'a') as report_file:
             logging.info(f"report created at {report_dir}")
-            filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            filewriter = csv.writer(report_file, delimiter=',', quotechar='\"', quoting=csv.QUOTE_MINIMAL)
             filewriter.writerow(['name', 'gender stat', 'age stat'])
 
     with open(report_dir, 'a') as report_file:
         logging.info(f"report saved and appended to {report_dir}")
-        filewriter = csv.writer(report_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        filewriter.writerow([image, genders, ages])
+        filewriter = csv.writer(report_file, delimiter=',', quotechar='\"', quoting=csv.QUOTE_MINIMAL)
+        filewriter.writerow([image.split("/")[-1], genders, ages])
 
 
 def annotate_fps(image: Image.Image, fps: int) -> None:
